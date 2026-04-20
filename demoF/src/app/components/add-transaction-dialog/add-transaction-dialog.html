@@ -1,0 +1,54 @@
+<h2>Add Transaction</h2>
+<div class="dialog-container">
+  <form [formGroup]="form">
+    <div class="input-group">
+
+      <input
+        placeholder="Date"
+        formControlName="date"
+        [matDatepicker]="picker"
+        readonly
+        (click)="picker.open()">
+
+
+      <mat-datepicker #picker></mat-datepicker>
+
+    @if (form.get('date')?.touched && form.get('date')?.errors?.['futureDate']) {
+      <span class="error">Date cannot be in the future</span>
+    }
+    </div>
+    <div class="input-group">
+      <input placeholder="Account Number" formControlName="accountNumber" (input)="formatAccountNumber($event)">
+
+      @if (form.get('accountNumber')?.touched && form.get('accountNumber')?.errors?.['pattern']) {
+        <span class="error">Format must be XXXX-XXXX-XXXX</span>
+      }
+    </div>
+
+    <div class="input-group">
+      <input placeholder="Account Holder Name" formControlName="accountHolderName">
+
+      @if (form.get('accountHolderName')?.touched && form.get('accountHolderName')?.errors?.['pattern']) {
+        <span class="error" >Name can only contain letters</span>
+      }
+    </div>
+
+    <div class="input-group">
+      <input type="number" placeholder="Amount"
+             formControlName="amount">
+
+      @if (form.get('amount')?.touched && form.get('amount')?.errors?.['min']) {
+        <span class="error" >Amount must be greater than 0</span>
+      }
+
+    </div>
+  </form>
+
+  <div class="dialog-actions">
+    <button mat-button class="btn-cancel" (click)="close()">Cancel</button>
+    <button mat-raised-button
+            class="btn-save"
+            [disabled]="form.invalid"
+            (click)="submit()">Save</button>
+  </div>
+</div>

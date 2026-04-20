@@ -1,0 +1,46 @@
+.transactions-page {
+  padding: 24px;
+  background: #f7f8fa;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin: 0;
+  font-weight: 600;
+}
+
+
+button {
+  cursor: pointer;
+}
+::ng-deep .mat-calendar-table-header {
+  display: none !important;
+}
+
+
+
+.mat-mdc-snack-bar-container .mdc-button {
+  color: #000 !important;
+
+}
+
+.mat-mdc-snack-bar-container .mdc-button:hover {
+  color: #ccc6c6 !important;
+}
+
+
+.mat-mdc-snack-bar-container .mdc-button__label {
+  color: #000 !important;
+}
+
+.mat-mdc-snack-bar-container .mdc-button:hover .mdc-button__label {
+  color: #000 !important;
+}
+

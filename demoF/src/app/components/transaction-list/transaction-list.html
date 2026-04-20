@@ -1,0 +1,48 @@
+<ng-container>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z2" style="width: 100%; border-collapse: collapse;">
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef style="border: 1px solid #ccc; padding: 6px; text-align: left;">Date</th>
+      <td mat-cell *matCellDef="let t" style="border: 1px solid #ccc; padding: 6px;">{{ t.date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="accountNumber">
+      <th mat-header-cell *matHeaderCellDef style="border: 1px solid #ccc; padding: 6px; text-align: left;">Account Number</th>
+      <td mat-cell *matCellDef="let t" style="border: 1px solid #ccc; padding: 6px;">{{ t.accountNumber }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="accountHolderName">
+      <th mat-header-cell *matHeaderCellDef style="border: 1px solid #ccc; padding: 6px; text-align: left;">Account Holder Name</th>
+      <td mat-cell *matCellDef="let t" style="border: 1px solid #ccc; padding: 6px;">{{ t.accountHolderName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef style="border: 1px solid #ccc; padding: 6px; text-align: right;">Amount</th>
+      <td mat-cell *matCellDef="let t" style="border: 1px solid #ccc; padding: 6px; text-align: right;">{{ t.amount | number:'1.2-2' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef style="border: 1px solid #ccc; padding: 6px; text-align: left;">Status</th>
+      <td mat-cell *matCellDef="let t" style="border: 1px solid #ccc; padding: 6px;">
+        <span class="status-chip"
+              [ngClass]="{
+                'status-pending': t.status === 'Pending',
+                'status-settled': t.status === 'Settled',
+                'status-failed': t.status === 'Failed'
+              }">{{ t.status }}</span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator
+    [length]="dataSource.filteredData.length || dataSource.data.length || 0"
+    [pageSize]="10"
+    [pageSizeOptions]="[10]"
+    showFirstLastButtons>
+  </mat-paginator>
+
+</ng-container>

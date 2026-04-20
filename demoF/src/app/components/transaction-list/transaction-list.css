@@ -1,0 +1,28 @@
+/* Status chip styles */
+.status-chip {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  border: 1px solid transparent;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+  border-color: #ffeeba;
+}
+
+.status-settled {
+  background: #e6f4ea;
+  color: #1b5e20;
+  border-color: #c8e6c9;
+}
+
+.status-failed {
+  background: #fdecea;
+  color: #b71c1c;
+  border-color: #f5c6cb;
+}

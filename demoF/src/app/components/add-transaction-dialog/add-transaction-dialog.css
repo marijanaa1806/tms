@@ -1,0 +1,159 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+h2 {
+  margin: 0;
+  padding: 20px 0 0px 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dialog-container {
+  width: 100%;//
+  max-width: 340px;
+  height: calc(100% - 48px);
+  margin: 0 auto;
+  padding: 0 10px 14px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.btn-save:disabled {
+  background-color: #ccc !important;
+  color: #666 !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
+}
+::ng-deep .mat-calendar-table-header {
+  display: none !important;
+}
+.datepicker-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.datepicker-wrapper input {
+  width: 100%;
+  padding-right: 45px !important;
+}
+
+
+.datepicker-wrapper mat-datepicker-toggle {
+  position: absolute;
+  right: 5px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+
+::ng-deep .mat-mdc-icon-button {
+  --mdc-icon-button-state-layer-size: 32px !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 4px !important;
+}
+
+::ng-deep .mat-datepicker-toggle .mat-mdc-button-touch-target {
+  width: 32px !important;
+  height: 32px !important;
+}
+.error {
+  position: absolute;
+  bottom: 2px;
+  left: 6px;
+  color: red;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+input,
+mat-form-field {
+  width: 100%;
+}
+
+input {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 20px;
+}
+input.ng-invalid.ng-touched {
+  border-color: #e53935;
+}
+.dialog-actions button {
+  min-width: 110px;
+  border-radius: 8px;
+  height: 40px;
+}
+
+.btn-cancel {
+  background: #e53935 !important;
+  color: #fff !important;
+}
+
+.btn-save {
+  background: #2e7d32 !important;
+  color: #fff !important;
+}
+
+
+.btn-cancel:hover {
+  background: #c62828 !important;
+}
+
+.btn-save:hover {
+  background: #1b5e20 !important;
+}
+
+.dialog-actions button {
+  transition: background-color 120ms ease-in-out, filter 120ms ease-in-out;
+}
+
+::ng-deep .mat-datepicker-content,
+::ng-deep .mat-mdc-datepicker-content {
+  background-color: #ffffff !important;
+  color: rgba(0, 0, 0, 0.87) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+}
+
+
+::ng-deep .mat-calendar {
+  background-color: #ffffff !important;
+}
+
+
+::ng-deep .cdk-overlay-pane {
+  opacity: 1 !important;
+}
+
