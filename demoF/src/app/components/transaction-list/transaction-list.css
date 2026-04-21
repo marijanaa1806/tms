@@ -26,3 +26,16 @@
   color: #b71c1c;
   border-color: #f5c6cb;
 }
+ .error-btn {
+  background: #b71c1c !important;
+  color: #ffffff !important;
+  border: 2px solid #f5c6cb !important;
+  border-radius: 8px;
+}
+
+ .error-btn:hover {
+  filter: brightness(0.95);
+}
+ .error-details{
+   color: #b71c1c !important;
+ }

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.enums.TransactionStatus;
+import com.example.demo.exceptions.CsvFormatException;
 import com.example.demo.model.Transaction;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +54,7 @@ public class TransactionService {
     private Transaction mapLine(String line) {
         try {
             String[] parts = line.split(",");
-            if (parts.length < 5) return null;
+            if (parts.length < 5) throw new CsvFormatException("Skipping malformed CSV line: " + line);
 
             Transaction transaction = new Transaction();
             transaction.setDate(LocalDate.parse(parts[0].trim()));
@@ -63,7 +64,7 @@ public class TransactionService {
             transaction.setStatus(TransactionStatus.valueOf(parts[4].trim()));
             return transaction;
         } catch (Exception e) {
-            throw new RuntimeException("Skipping malformed CSV line: " + line);
+            throw new CsvFormatException("Skipping malformed CSV line: " + line);
 
         }
     }
