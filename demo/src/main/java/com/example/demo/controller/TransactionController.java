@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Transaction;
 import com.example.demo.service.TransactionService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/transactions")
 public class TransactionController {
     private final TransactionService transactionService;
 
@@ -27,7 +28,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) throws IOException {
+    public ResponseEntity<Transaction> createTransaction(@Valid @RequestBody Transaction transaction) throws IOException {
         Transaction savedTransaction= transactionService.addTransaction(transaction);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedTransaction);
     }

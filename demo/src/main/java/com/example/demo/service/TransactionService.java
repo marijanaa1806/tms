@@ -15,73 +15,87 @@ import java.util.List;
 
 @Service
 public class TransactionService {
-    private static final String FILE_PATH = "data/transactions.csv";
+    private static final String FILE_PATH = "src/data/transactions.csv";
+    private static final String CSV_HEADER = "Transaction Date,Account Number,Account Holder Name,Amount,Status";
+
+    public TransactionService() {
+        initCsvFile();
+    }
+
+    private void initCsvFile() {
+        try {
+            File file = new File(FILE_PATH);
+
+            if (file.getParentFile() != null) {
+                file.getParentFile().mkdirs();
+            }
+
+            if (!file.exists()) {
+                Files.write(Paths.get(FILE_PATH), (CSV_HEADER + System.lineSeparator()).getBytes());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize CSV file", e);
+        }
+    }
+
     public List<Transaction> getAllTransactions() {
-
-        try (InputStream input = getClass().getClassLoader()
-                .getResourceAsStream(FILE_PATH)) {
-
-            if (input == null) {
-                throw new RuntimeException("CSV file not found in resources");
-            }
-
-            try (BufferedReader reader =
-                         new BufferedReader(new InputStreamReader(input))) {
-
-                return reader.lines()
-                        .skip(1)
-                        .map(this::mapLine)
-                        .toList();
-            }
-
+        try (var lines = Files.lines(Paths.get(FILE_PATH))) {
+            return lines.skip(1)
+                    .filter(line -> line != null && !line.trim().isEmpty())
+                    .map(this::mapLine)
+                    .filter(java.util.Objects::nonNull)
+                    .toList();
         } catch (IOException e) {
             throw new RuntimeException("Error reading CSV file", e);
         }
     }
 
     private Transaction mapLine(String line) {
-        String[] parts = line.split(",");
-
-        Transaction transaction = new Transaction();
-
-        transaction.setDate(LocalDate.parse(parts[0]));
-        transaction.setAccountNumber(parts[1]);
-        transaction.setAccountHolder(parts[2]);
-        transaction.setAmount(new BigDecimal(parts[3]));
-        transaction.setStatus(parseStatus(parts[4]));
-
-        return transaction;
-    }
-
-    private TransactionStatus parseStatus(String value) {
-        return TransactionStatus.valueOf(value.trim().toUpperCase());
-    }
-    public Transaction addTransaction(Transaction transaction) throws IOException {
-
-        writeToCsv(transaction);
-
-        return transaction;
-    }
-
-    private String toLine(Transaction t) {
-        return String.format("%s,%s,%s,%s,%s",
-                t.getDate(),
-                t.getAccountNumber(),
-                t.getAccountHolder(),
-                t.getAmount(),
-                t.getStatus());
-    }
-
-    private void writeToCsv(Transaction transaction) throws IOException {
         try {
+            String[] parts = line.split(",");
+            if (parts.length < 5) return null;
+
+            Transaction transaction = new Transaction();
+            transaction.setDate(LocalDate.parse(parts[0].trim()));
+            transaction.setAccountNumber(parts[1].trim());
+            transaction.setAccountHolderName(parts[2].trim());
+            transaction.setAmount(new BigDecimal(parts[3].trim()));
+            transaction.setStatus(TransactionStatus.valueOf(parts[4].trim()));
+            return transaction;
+        } catch (Exception e) {
+            throw new RuntimeException("Skipping malformed CSV line: " + line);
+
+        }
+    }
+
+
+    public synchronized Transaction addTransaction(Transaction transaction) {
+        transaction.setStatus(getRandomStatus());
+        writeToCsv(transaction);
+        return transaction;
+    }
+
+    private void writeToCsv(Transaction transaction) {
+        try {
+            String line = String.format("%s,%s,%s,%s,%s%n",
+                    transaction.getDate(),
+                    transaction.getAccountNumber(),
+                    transaction.getAccountHolderName(),
+                    transaction.getAmount(),
+                    transaction.getStatus());
+
             Files.write(
                     Paths.get(FILE_PATH),
-                    (toLine(transaction) + System.lineSeparator()).getBytes(),
-                    StandardOpenOption.APPEND,
-                    StandardOpenOption.CREATE
+                    line.getBytes(),
+                    StandardOpenOption.APPEND
             );
         } catch (IOException e) {
-            throw new RuntimeException("Error writing CSV file", e);
+            throw new RuntimeException("Error writing to CSV", e);
         }
+    }
+
+    private TransactionStatus getRandomStatus() {
+        TransactionStatus[] statuses = TransactionStatus.values();
+        return statuses[new java.util.Random().nextInt(statuses.length)];
     }
 }

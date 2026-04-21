@@ -1,18 +1,18 @@
 package com.example.demo.enums;
 
 public enum TransactionStatus {
-    PENDING,
-    SETTLED,
-    FAILED;
+    Pending,
+    Settled,
+    Failed;
 
     public boolean isSuccessful() {
-        return this == SETTLED;
+        return this == Settled;
     }
 
     public boolean isFailed() {
-        return this == FAILED;
+        return this == Failed;
     }
     public boolean isPending() {
-        return this == PENDING;
+        return this == Pending;
     }
 }
