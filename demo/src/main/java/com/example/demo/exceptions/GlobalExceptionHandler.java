@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleCsvException(CsvFormatException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("message", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(body);
 
